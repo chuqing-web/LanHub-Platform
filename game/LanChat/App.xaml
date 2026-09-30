@@ -1,0 +1,50 @@
+<Application x:Class="LanChat.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+  <Application.Resources>
+    <!-- 工务电台风：浅底、炭侧栏、钢蓝强调，无霓虹 -->
+    <SolidColorBrush x:Key="Bg" Color="#E4E7EB"/>
+    <SolidColorBrush x:Key="Panel" Color="#F7F8F9"/>
+    <SolidColorBrush x:Key="Side" Color="#2A3138"/>
+    <SolidColorBrush x:Key="Side2" Color="#353D45"/>
+    <SolidColorBrush x:Key="Accent" Color="#2F5D8C"/>
+    <SolidColorBrush x:Key="AccentHot" Color="#B85C38"/>
+    <SolidColorBrush x:Key="Text" Color="#1E242A"/>
+    <SolidColorBrush x:Key="TextOnDark" Color="#E8ECF0"/>
+    <SolidColorBrush x:Key="Muted" Color="#6B7580"/>
+    <SolidColorBrush x:Key="MutedOnDark" Color="#9AA3AB"/>
+    <SolidColorBrush x:Key="Line" Color="#C9CED4"/>
+    <SolidColorBrush x:Key="BubbleMe" Color="#D6E4F0"/>
+    <SolidColorBrush x:Key="BubbleThem" Color="#FFFFFF"/>
+    <FontFamily x:Key="UiFont">Microsoft YaHei UI</FontFamily>
+    <FontFamily x:Key="MonoFont">Cascadia Mono, Consolas, Courier New</FontFamily>
+
+    <Style x:Key="SideBtn" TargetType="Button">
+      <Setter Property="Background" Value="#353D45"/>
+      <Setter Property="Foreground" Value="#E8ECF0"/>
+      <Setter Property="BorderBrush" Value="#4A545E"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Height" Value="34"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="FontSize" Value="13"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="10,0">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="#404851"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+  </Application.Resources>
+</Application>

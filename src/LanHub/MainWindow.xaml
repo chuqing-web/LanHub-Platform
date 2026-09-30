@@ -1,0 +1,721 @@
+<Window x:Class="LanHub.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:LanHub"
+        Title="LanHub"
+        Icon="pack://application:,,,/Assets/app.ico"
+        Height="760" Width="1180"
+        MinHeight="640" MinWidth="980"
+        WindowStartupLocation="CenterScreen"
+        Background="#0B0D10"
+        Foreground="#E8EAED"
+        FontFamily="Microsoft YaHei UI, Segoe UI">
+  <Window.Resources>
+    <local:ReadyHostConverter x:Key="ReadyHostConverter"/>
+    <local:ReadyOnlyConverter x:Key="ReadyOnlyConverter"/>
+    <local:HostLineConverter x:Key="HostLineConverter"/>
+    <local:LibraryMetaConverter x:Key="LibraryMetaConverter"/>
+
+    <SolidColorBrush x:Key="BgDeep" Color="#0B0D10"/>
+    <SolidColorBrush x:Key="BgPanel" Color="#14171C"/>
+    <SolidColorBrush x:Key="BgElevated" Color="#1C2128"/>
+    <SolidColorBrush x:Key="BgHover" Color="#252B34"/>
+    <SolidColorBrush x:Key="Line" Color="#2A3038"/>
+    <SolidColorBrush x:Key="TextMain" Color="#E8EAED"/>
+    <SolidColorBrush x:Key="TextMuted" Color="#8B939E"/>
+    <SolidColorBrush x:Key="Accent" Color="#3B82F6"/>
+    <SolidColorBrush x:Key="AccentSoft" Color="#1D4ED8"/>
+
+    <Style x:Key="LangBtn" TargetType="Button">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Foreground" Value="#8B939E"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="8,4"/>
+      <Setter Property="FontSize" Value="12"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="3" Padding="{TemplateBinding Padding}">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="#E8EAED"/>
+                <Setter TargetName="bd" Property="Background" Value="#252B34"/>
+              </Trigger>
+              <Trigger Property="Tag" Value="Active">
+                <Setter Property="Foreground" Value="#E8EAED"/>
+                <Setter TargetName="bd" Property="Background" Value="#1D4ED8"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="TopNavBtn" TargetType="Button">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="Foreground" Value="#8B939E"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="18,10"/>
+      <Setter Property="FontSize" Value="15"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="bd" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+              <StackPanel>
+                <ContentPresenter HorizontalAlignment="Center"/>
+                <Border x:Name="underline" Height="2" Margin="0,8,0,0" Background="Transparent" CornerRadius="1"/>
+              </StackPanel>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="#E8EAED"/>
+              </Trigger>
+              <Trigger Property="Tag" Value="Active">
+                <Setter Property="Foreground" Value="#E8EAED"/>
+                <Setter TargetName="underline" Property="Background" Value="#3B82F6"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="PrimaryBtn" TargetType="Button">
+      <Setter Property="Background" Value="#3B82F6"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="22,11"/>
+      <Setter Property="FontSize" Value="14"/>
+      <Setter Property="FontWeight" Value="SemiBold"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#2563EB"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style x:Key="GhostBtn" TargetType="Button">
+      <Setter Property="Background" Value="#1C2128"/>
+      <Setter Property="Foreground" Value="#E8EAED"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="16,10"/>
+      <Setter Property="FontSize" Value="13"/>
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}"
+                    BorderBrush="#2A3038" BorderThickness="1">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#252B34"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style TargetType="TextBox">
+      <Setter Property="Background" Value="#0F1216"/>
+      <Setter Property="Foreground" Value="#E8EAED"/>
+      <Setter Property="BorderBrush" Value="#2A3038"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Padding" Value="12,9"/>
+      <Setter Property="CaretBrush" Value="#3B82F6"/>
+    </Style>
+
+    <!-- Dark ComboBox: PART_Popup + named hosts required for items to appear -->
+    <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+      <Border x:Name="Chrome"
+              Background="{TemplateBinding Background}"
+              BorderBrush="{TemplateBinding BorderBrush}"
+              BorderThickness="{TemplateBinding BorderThickness}"
+              CornerRadius="4"
+              SnapsToDevicePixels="True">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="32"/>
+          </Grid.ColumnDefinitions>
+          <Path x:Name="Arrow" Grid.Column="1"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Data="M 0 0 L 6 6 L 12 0"
+                Stroke="#8B939E" StrokeThickness="1.5"
+                StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
+                Fill="Transparent"/>
+        </Grid>
+      </Border>
+      <ControlTemplate.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter TargetName="Chrome" Property="Background" Value="#252B34"/>
+          <Setter TargetName="Arrow" Property="Stroke" Value="#E8EAED"/>
+        </Trigger>
+        <Trigger Property="IsChecked" Value="True">
+          <Setter TargetName="Chrome" Property="BorderBrush" Value="#3B82F6"/>
+          <Setter TargetName="Arrow" Property="Stroke" Value="#E8EAED"/>
+        </Trigger>
+        <Trigger Property="IsEnabled" Value="False">
+          <Setter TargetName="Arrow" Property="Stroke" Value="#4B5563"/>
+        </Trigger>
+      </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="ComboBox">
+      <Setter Property="Background" Value="#0F1216"/>
+      <Setter Property="Foreground" Value="#E8EAED"/>
+      <Setter Property="BorderBrush" Value="#2A3038"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="Height" Value="36"/>
+      <Setter Property="Padding" Value="12,6,36,6"/>
+      <Setter Property="HorizontalContentAlignment" Value="Left"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+      <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+      <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+      <Setter Property="SnapsToDevicePixels" Value="True"/>
+      <Setter Property="OverridesDefaultStyle" Value="True"/>
+      <Setter Property="ItemTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <TextBlock Text="{Binding Title}"
+                       Foreground="#E8EAED"
+                       FontSize="13"
+                       VerticalAlignment="Center"
+                       TextTrimming="CharacterEllipsis"/>
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ComboBox">
+            <Grid x:Name="MainGrid" SnapsToDevicePixels="True">
+              <ToggleButton x:Name="ToggleButton"
+                            Template="{StaticResource ComboBoxToggleButton}"
+                            Focusable="False"
+                            ClickMode="Press"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"/>
+              <ContentPresenter x:Name="ContentSite"
+                                IsHitTestVisible="False"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Content="{TemplateBinding SelectionBoxItem}"
+                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                TextElement.Foreground="{TemplateBinding Foreground}"
+                                TextElement.FontFamily="{TemplateBinding FontFamily}"
+                                TextElement.FontSize="{TemplateBinding FontSize}"/>
+              <!-- PART_Popup is required; ComboBox.OnApplyTemplate looks up this name -->
+              <Popup x:Name="PART_Popup"
+                     Placement="Bottom"
+                     PlacementTarget="{Binding ElementName=MainGrid}"
+                     IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                     AllowsTransparency="True"
+                     Focusable="False"
+                     PopupAnimation="Slide">
+                <Grid x:Name="DropDown"
+                      SnapsToDevicePixels="True"
+                      MinWidth="{Binding ActualWidth, ElementName=MainGrid}"
+                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                  <Border x:Name="DropDownBorder"
+                          Background="#1C2128"
+                          BorderBrush="#2A3038"
+                          BorderThickness="1"
+                          CornerRadius="4"
+                          Margin="0,4,0,0">
+                    <ScrollViewer x:Name="DropDownScrollViewer"
+                                  Margin="2"
+                                  CanContentScroll="True"
+                                  SnapsToDevicePixels="True">
+                      <!-- Name ItemsPresenter required when not a simple direct host -->
+                      <ItemsPresenter x:Name="ItemsPresenter"
+                                      KeyboardNavigation.DirectionalNavigation="Contained"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </ScrollViewer>
+                  </Border>
+                </Grid>
+              </Popup>
+            </Grid>
+            <ControlTemplate.Triggers>
+              <Trigger Property="HasItems" Value="False">
+                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="48"/>
+              </Trigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#6B7280"/>
+                <Setter Property="Opacity" Value="0.65"/>
+              </Trigger>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="#3B82F6"/>
+              </Trigger>
+              <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="BorderBrush" Value="#3B82F6"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style TargetType="ComboBoxItem">
+      <Setter Property="OverridesDefaultStyle" Value="True"/>
+      <Setter Property="Foreground" Value="#E8EAED"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Padding" Value="10,8"/>
+      <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="SnapsToDevicePixels" Value="True"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ComboBoxItem">
+            <Border x:Name="Bd"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Padding="{TemplateBinding Padding}"
+                    CornerRadius="3"
+                    SnapsToDevicePixels="True">
+              <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                TextElement.Foreground="{TemplateBinding Foreground}"
+                                RecognizesAccessKey="True"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsHighlighted" Value="True">
+                <Setter TargetName="Bd" Property="Background" Value="#252B34"/>
+                <Setter Property="Foreground" Value="#FFFFFF"/>
+              </Trigger>
+              <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="Bd" Property="Background" Value="#1A2332"/>
+                <Setter Property="Foreground" Value="#93C5FD"/>
+              </Trigger>
+              <MultiTrigger>
+                <MultiTrigger.Conditions>
+                  <Condition Property="IsSelected" Value="True"/>
+                  <Condition Property="IsHighlighted" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Bd" Property="Background" Value="#1E3A5F"/>
+                <Setter Property="Foreground" Value="#FFFFFF"/>
+              </MultiTrigger>
+              <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#6B7280"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <Style TargetType="ListBox">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Foreground" Value="#E8EAED"/>
+      <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+    </Style>
+
+    <Style TargetType="ListBoxItem">
+      <Setter Property="Padding" Value="0"/>
+      <Setter Property="Margin" Value="0,0,0,8"/>
+      <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="ListBoxItem">
+            <Border x:Name="bd" Background="#1C2128" CornerRadius="6" Padding="14,12" BorderBrush="#2A3038" BorderThickness="1">
+              <ContentPresenter/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="#252B34"/>
+              </Trigger>
+              <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="bd" Property="BorderBrush" Value="#3B82F6"/>
+                <Setter TargetName="bd" Property="Background" Value="#1A2332"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="56"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <!-- Top bar -->
+    <Border Grid.Row="0" Background="#101318" BorderBrush="#1F242C" BorderThickness="0,0,0,1">
+      <DockPanel Margin="20,0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" DockPanel.Dock="Left">
+          <Image Source="pack://application:,,,/Assets/icon.png" Width="28" Height="28" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
+          <TextBlock Text="LanHub" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,28,0" Foreground="#E8EAED"/>
+          <Button x:Name="BtnNavLobby" Content="大厅" Style="{StaticResource TopNavBtn}" Tag="Active" Click="Nav_Click"/>
+          <Button x:Name="BtnNavLibrary" Content="游戏库" Style="{StaticResource TopNavBtn}" Click="Nav_Click"/>
+          <Button x:Name="BtnNavSettings" Content="设置" Style="{StaticResource TopNavBtn}" Click="Nav_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right">
+          <Button x:Name="BtnLangZh" Content="中" Style="{StaticResource LangBtn}" Click="Lang_Click" Margin="0,0,2,0"/>
+          <Button x:Name="BtnLangEn" Content="EN" Style="{StaticResource LangBtn}" Click="Lang_Click" Margin="0,0,14,0"/>
+          <TextBlock x:Name="LblDisplayName" Text="显示名" Foreground="#8B939E" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="12"/>
+          <TextBox x:Name="TxtDisplayName" Width="140" VerticalAlignment="Center" Padding="8,6"/>
+        </StackPanel>
+      </DockPanel>
+    </Border>
+
+    <!-- Content -->
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Background="#0B0D10">
+      <Grid Margin="28,24,28,32">
+
+        <!-- Lobby -->
+        <Grid x:Name="PanelLobby">
+          <Grid x:Name="ModePicker">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Featured banner -->
+            <Border Grid.Row="0" Height="220" CornerRadius="8" ClipToBounds="True">
+              <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                  <GradientStop Color="#0F172A" Offset="0"/>
+                  <GradientStop Color="#1E3A5F" Offset="0.45"/>
+                  <GradientStop Color="#1D4ED8" Offset="1"/>
+                </LinearGradientBrush>
+              </Border.Background>
+              <Grid Margin="36,28">
+                <StackPanel VerticalAlignment="Center" MaxWidth="560" HorizontalAlignment="Left">
+                  <TextBlock x:Name="TxtBannerEyebrow" Text="精选" Foreground="#93C5FD" FontSize="13" Margin="0,0,0,8"/>
+                  <TextBlock x:Name="TxtBannerTitle" Text="局域网派对大厅" FontSize="32" FontWeight="Bold" Foreground="White"/>
+                  <TextBlock x:Name="TxtBannerSub" Text="同一 Wi‑Fi 下开房或加入，用房间号校验，经 SDK 互联开玩。"
+                             Foreground="#CBD5E1" FontSize="14" TextWrapping="Wrap" Margin="0,10,0,22" LineHeight="22"/>
+                  <StackPanel Orientation="Horizontal">
+                    <Button x:Name="BtnBannerHost" Content="创建房间" Style="{StaticResource PrimaryBtn}" Click="ModeHost_Click"/>
+                    <Button x:Name="BtnBannerJoin" Content="加入房间" Style="{StaticResource GhostBtn}" Click="ModeClient_Click" Margin="12,0,0,0"
+                            Background="#0F172A"/>
+                  </StackPanel>
+                </StackPanel>
+              </Grid>
+            </Border>
+
+            <TextBlock x:Name="TxtShortcuts" Grid.Row="1" Text="快捷入口" FontSize="16" FontWeight="SemiBold" Margin="0,28,0,14" Foreground="#E8EAED"/>
+
+            <UniformGrid Grid.Row="2" Columns="2" Rows="1" HorizontalAlignment="Stretch">
+              <Border Background="#14171C" CornerRadius="8" Margin="0,0,10,0" Padding="22" BorderBrush="#2A3038" BorderThickness="1"
+                      Cursor="Hand" MouseLeftButtonUp="ModeHostCard_Click">
+                <StackPanel>
+                  <TextBlock x:Name="TxtCardHostTag" Text="主机" Foreground="#3B82F6" FontSize="12" Margin="0,0,0,8"/>
+                  <TextBlock x:Name="TxtCardHostTitle" Text="开房联机" FontSize="20" FontWeight="SemiBold"/>
+                  <TextBlock x:Name="TxtCardHostDesc" Text="生成房间号，等待好友加入后开始会话。" Foreground="#8B939E" TextWrapping="Wrap" Margin="0,8,0,0" LineHeight="20"/>
+                </StackPanel>
+              </Border>
+              <Border Background="#14171C" CornerRadius="8" Margin="10,0,0,0" Padding="22" BorderBrush="#2A3038" BorderThickness="1"
+                      Cursor="Hand" MouseLeftButtonUp="ModeClientCard_Click">
+                <StackPanel>
+                  <TextBlock x:Name="TxtCardClientTag" Text="客户端" Foreground="#3B82F6" FontSize="12" Margin="0,0,0,8"/>
+                  <TextBlock x:Name="TxtCardClientTitle" Text="发现并加入" FontSize="20" FontWeight="SemiBold"/>
+                  <TextBlock x:Name="TxtCardClientDesc" Text="自动发现同网主机，输入房间号即可进房。" Foreground="#8B939E" TextWrapping="Wrap" Margin="0,8,0,0" LineHeight="20"/>
+                </StackPanel>
+              </Border>
+            </UniformGrid>
+          </Grid>
+
+          <!-- Host -->
+          <Grid x:Name="HostPanel" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <DockPanel Margin="0,0,0,18">
+              <Button x:Name="BtnHostBack" Content="返回" Style="{StaticResource GhostBtn}" Click="BackToMode_Click" DockPanel.Dock="Left"/>
+              <TextBlock x:Name="TxtHostTitle" Text="主机大厅" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" Margin="14,0,0,0"/>
+            </DockPanel>
+            <Grid Grid.Row="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.15*"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Border Background="#14171C" CornerRadius="8" Padding="24" Margin="0,0,10,0" BorderBrush="#2A3038" BorderThickness="1">
+                <StackPanel>
+                  <TextBlock x:Name="TxtHostRoomLabel" Text="房间号" Foreground="#8B939E" FontSize="12"/>
+                  <TextBlock x:Name="TxtRoomCode" Text="------" FontSize="44" FontWeight="Bold" Foreground="#3B82F6" Margin="0,6,0,0"/>
+                  <StackPanel Orientation="Horizontal" Margin="0,16,0,0">
+                    <Button x:Name="BtnCreateRoom" Content="开房" Style="{StaticResource PrimaryBtn}" Click="BtnCreateRoom_Click"/>
+                    <Button x:Name="BtnCopyRoom" Content="复制" Style="{StaticResource GhostBtn}" Click="BtnCopyRoom_Click" Margin="8,0,0,0"/>
+                    <Button x:Name="BtnDissolve" Content="解散" Style="{StaticResource GhostBtn}" Click="BtnDissolve_Click" Margin="8,0,0,0"/>
+                  </StackPanel>
+                  <Border Height="1" Background="#2A3038" Margin="0,22,0,18"/>
+                  <TextBlock x:Name="TxtSelectGame" Text="选择游戏" Foreground="#8B939E" FontSize="12" Margin="0,0,0,8"/>
+                  <ComboBox x:Name="HostGameCombo"/>
+                  <Button x:Name="BtnStartGame" Content="开始会话" Style="{StaticResource PrimaryBtn}" Click="BtnStartGame_Click" Margin="0,16,0,0" HorizontalAlignment="Left"/>
+                  <TextBlock x:Name="HostStatus" TextWrapping="Wrap" Foreground="#8B939E" Margin="0,16,0,0" FontSize="12"/>
+                </StackPanel>
+              </Border>
+              <Border Grid.Column="1" Background="#14171C" CornerRadius="8" Padding="20" Margin="10,0,0,0" BorderBrush="#2A3038" BorderThickness="1">
+                <DockPanel>
+                  <DockPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+                    <TextBlock x:Name="TxtHostMembers" Text="成员" FontSize="16" FontWeight="SemiBold"/>
+                    <Button x:Name="BtnKick" Content="踢出" Style="{StaticResource GhostBtn}" Click="BtnKick_Click" HorizontalAlignment="Right" Padding="12,6"/>
+                  </DockPanel>
+                  <ListBox x:Name="HostPlayersList">
+                    <ListBox.ItemTemplate>
+                      <DataTemplate>
+                        <DockPanel>
+                          <StackPanel>
+                            <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold"/>
+                            <TextBlock Foreground="#8B939E" FontSize="12" Margin="0,4,0,0">
+                              <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource ReadyHostConverter}">
+                                  <Binding Path="IsReady"/>
+                                  <Binding Path="IsHost"/>
+                                </MultiBinding>
+                              </TextBlock.Text>
+                            </TextBlock>
+                          </StackPanel>
+                        </DockPanel>
+                      </DataTemplate>
+                    </ListBox.ItemTemplate>
+                  </ListBox>
+                </DockPanel>
+              </Border>
+            </Grid>
+          </Grid>
+
+          <!-- Client -->
+          <Grid x:Name="ClientPanel" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <DockPanel Margin="0,0,0,18">
+              <Button x:Name="BtnClientBack" Content="返回" Style="{StaticResource GhostBtn}" Click="BackToMode_Click" DockPanel.Dock="Left"/>
+              <TextBlock x:Name="TxtClientTitle" Text="加入房间" FontSize="22" FontWeight="SemiBold" VerticalAlignment="Center" Margin="14,0,0,0"/>
+            </DockPanel>
+            <Grid Grid.Row="1">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1.1*"/>
+              </Grid.ColumnDefinitions>
+              <Border Background="#14171C" CornerRadius="8" Padding="20" Margin="0,0,10,0" BorderBrush="#2A3038" BorderThickness="1">
+                <DockPanel>
+                  <TextBlock x:Name="TxtDiscoveredHosts" DockPanel.Dock="Top" Text="发现的主机" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                  <ListBox x:Name="HostsList" SelectionChanged="HostsList_SelectionChanged"
+                           SelectionMode="Single" PreviewMouseLeftButtonDown="HostsList_PreviewMouseLeftButtonDown">
+                    <ListBox.ItemTemplate>
+                      <DataTemplate>
+                        <StackPanel>
+                          <TextBlock Text="{Binding HostName}" FontWeight="SemiBold"/>
+                          <TextBlock Foreground="#8B939E" FontSize="12" Margin="0,4,0,0">
+                            <TextBlock.Text>
+                              <MultiBinding Converter="{StaticResource HostLineConverter}">
+                                <Binding Path="IpAddress"/>
+                                <Binding Path="TcpPort"/>
+                                <Binding Path="Joinable"/>
+                              </MultiBinding>
+                            </TextBlock.Text>
+                          </TextBlock>
+                        </StackPanel>
+                      </DataTemplate>
+                    </ListBox.ItemTemplate>
+                  </ListBox>
+                </DockPanel>
+              </Border>
+              <Border Grid.Column="1" Background="#14171C" CornerRadius="8" Padding="22" Margin="10,0,0,0" BorderBrush="#2A3038" BorderThickness="1">
+                <DockPanel>
+                  <StackPanel DockPanel.Dock="Top">
+                    <TextBlock x:Name="TxtClientRoomLabel" Text="房间号" Foreground="#8B939E" FontSize="12"/>
+                    <TextBox x:Name="TxtJoinCode" MaxLength="6" FontSize="28" FontWeight="Bold" Margin="0,8,0,0" HorizontalContentAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+                      <Button x:Name="BtnJoin" Content="加入" Style="{StaticResource PrimaryBtn}" Click="BtnJoin_Click"/>
+                      <Button x:Name="BtnReady" Content="准备" Style="{StaticResource GhostBtn}" Click="BtnReady_Click" Margin="8,0,0,0"/>
+                      <Button x:Name="BtnLeave" Content="离开" Style="{StaticResource GhostBtn}" Click="BtnLeave_Click" Margin="8,0,0,0"/>
+                    </StackPanel>
+                    <Button x:Name="BtnOpenBoundGame" Content="打开已绑定游戏" Style="{StaticResource PrimaryBtn}"
+                            Click="BtnOpenBoundGame_Click" Margin="0,12,0,0" HorizontalAlignment="Left"
+                            IsEnabled="False"/>
+                    <TextBlock x:Name="ClientStatus" TextWrapping="Wrap" Foreground="#8B939E" Margin="0,14,0,14" FontSize="12"/>
+                    <TextBlock x:Name="TxtClientMembers" Text="成员" FontSize="16" FontWeight="SemiBold"/>
+                  </StackPanel>
+                  <ListBox x:Name="ClientPlayersList" Margin="0,10,0,0">
+                    <ListBox.ItemTemplate>
+                      <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                          <TextBlock Text="{Binding DisplayName}" FontWeight="SemiBold"/>
+                          <TextBlock Foreground="#8B939E" Margin="8,0,0,0"
+                                     Text="{Binding IsReady, Converter={StaticResource ReadyOnlyConverter}}"/>
+                        </StackPanel>
+                      </DataTemplate>
+                    </ListBox.ItemTemplate>
+                  </ListBox>
+                </DockPanel>
+              </Border>
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <!-- Library -->
+        <Grid x:Name="PanelLibrary" Visibility="Collapsed">
+          <DockPanel>
+            <DockPanel DockPanel.Dock="Top" Margin="0,0,0,18">
+              <StackPanel>
+                <TextBlock x:Name="TxtLibraryTitle" Text="游戏库" FontSize="22" FontWeight="SemiBold"/>
+                <TextBlock x:Name="TxtLibrarySub" Text="登记已接入 SDK 的游戏。库可为空，联机可用 Probe 验证。" Foreground="#8B939E" Margin="0,6,0,0" FontSize="13"/>
+              </StackPanel>
+              <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <Button x:Name="BtnAddGame" Content="添加" Style="{StaticResource PrimaryBtn}" Click="BtnAddGame_Click"/>
+                <Button x:Name="BtnEditGame" Content="编辑" Style="{StaticResource GhostBtn}" Click="BtnEditGame_Click" Margin="8,0,0,0"/>
+                <Button x:Name="BtnRemoveGame" Content="删除" Style="{StaticResource GhostBtn}" Click="BtnRemoveGame_Click" Margin="8,0,0,0"/>
+              </StackPanel>
+            </DockPanel>
+            <ListBox x:Name="GamesList" MouseDoubleClick="GamesList_MouseDoubleClick">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <DockPanel>
+                    <Border Width="52" Height="52" CornerRadius="8" Background="#0F172A" DockPanel.Dock="Left" Margin="0,0,14,0" ClipToBounds="True">
+                      <Grid>
+                        <TextBlock Text="▶" Foreground="#3B82F6" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"/>
+                        <Image Source="{Binding Icon, Mode=OneWay}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
+                      </Grid>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                      <TextBlock Text="{Binding Title, Mode=OneWay}" FontSize="15" FontWeight="SemiBold"/>
+                      <TextBlock Foreground="#8B939E" FontSize="12" Margin="0,4,0,0"
+                                 Text="{Binding GameId, Mode=OneWay, Converter={StaticResource LibraryMetaConverter}}"/>
+                      <TextBlock Text="{Binding ExePath, Mode=OneWay}" Foreground="#6B7280" FontSize="11" TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
+                    </StackPanel>
+                  </DockPanel>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </DockPanel>
+        </Grid>
+
+        <!-- Settings -->
+        <Grid x:Name="PanelSettings" Visibility="Collapsed">
+          <DockPanel LastChildFill="True">
+            <DockPanel DockPanel.Dock="Top" Margin="0,0,0,22">
+              <StackPanel>
+                <TextBlock x:Name="TxtSettingsTitle" Text="设置" FontSize="22" FontWeight="SemiBold"/>
+                <TextBlock x:Name="TxtSettingsSub" Text="个人资料与网络端口。保存后，新开房 / 发现时生效。"
+                           Foreground="#8B939E" Margin="0,6,0,0" FontSize="13"/>
+              </StackPanel>
+              <Button x:Name="BtnSaveSettings" Content="保存设置" Style="{StaticResource PrimaryBtn}" Click="BtnSaveSettings_Click"
+                      HorizontalAlignment="Right" VerticalAlignment="Top" DockPanel.Dock="Right"/>
+            </DockPanel>
+
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="16"/>
+                <RowDefinition Height="*"/>
+              </Grid.RowDefinitions>
+
+              <!-- Left: profile -->
+              <Border Grid.Row="0" Grid.Column="0" Background="#14171C" CornerRadius="8"
+                      BorderBrush="#2A3038" BorderThickness="1" MinHeight="160">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4"/>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <Border Grid.Column="0" Background="#3B82F6" CornerRadius="8,0,0,8"/>
+                  <StackPanel Grid.Column="1" Margin="22,20,22,22" VerticalAlignment="Center">
+                    <TextBlock x:Name="TxtProfileTitle" Text="个人资料" FontSize="15" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="TxtProfileHint" Text="在房间成员列表中显示的名称" Foreground="#8B939E" FontSize="12" Margin="0,4,0,16"/>
+                    <TextBlock x:Name="TxtSettingsNameLabel" Text="显示名" Foreground="#8B939E" FontSize="12"/>
+                    <TextBox x:Name="TxtSettingsName" Margin="0,8,0,0"/>
+                  </StackPanel>
+                </Grid>
+              </Border>
+
+              <!-- Right: room limit -->
+              <Border Grid.Row="0" Grid.Column="2" Background="#14171C" CornerRadius="8"
+                      BorderBrush="#2A3038" BorderThickness="1" MinHeight="160" Padding="22,20">
+                <StackPanel VerticalAlignment="Center">
+                  <TextBlock x:Name="TxtMaxPlayersTitle" Text="房间人数上限" FontSize="15" FontWeight="SemiBold"/>
+                  <TextBlock x:Name="TxtMaxPlayersHint" Text="开房时可加入的最大玩家数（含主机），范围 2–8"
+                             Foreground="#8B939E" FontSize="12" Margin="0,4,0,16" TextWrapping="Wrap"/>
+                  <TextBox x:Name="TxtMaxPlayers" HorizontalContentAlignment="Center"
+                           FontSize="22" FontWeight="SemiBold" Height="48"/>
+                </StackPanel>
+              </Border>
+
+              <!-- Bottom full width: network ports -->
+              <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                      Background="#14171C" CornerRadius="8" BorderBrush="#2A3038" BorderThickness="1" Padding="22,20">
+                <StackPanel>
+                  <TextBlock x:Name="TxtPortsTitle" Text="网络端口" FontSize="15" FontWeight="SemiBold"/>
+                  <TextBlock x:Name="TxtPortsHint" Text="同一台电脑开多个客户端时，请为各实例设置不同端口"
+                             Foreground="#8B939E" FontSize="12" Margin="0,4,0,18"/>
+                  <UniformGrid Columns="4" Rows="1">
+                    <StackPanel Margin="0,0,10,0">
+                      <DockPanel Margin="0,0,0,8">
+                        <TextBlock x:Name="TxtPortUdp" Text="UDP 发现" Foreground="#E8EAED" FontSize="13"/>
+                        <TextBlock Text="37810" Foreground="#6B7280" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                      </DockPanel>
+                      <TextBox x:Name="TxtUdpPort"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,0">
+                      <DockPanel Margin="0,0,0,8">
+                        <TextBlock x:Name="TxtPortTcp" Text="TCP 房间" Foreground="#E8EAED" FontSize="13"/>
+                        <TextBlock Text="37811" Foreground="#6B7280" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                      </DockPanel>
+                      <TextBox x:Name="TxtTcpPort"/>
+                    </StackPanel>
+                    <StackPanel Margin="5,0">
+                      <DockPanel Margin="0,0,0,8">
+                        <TextBlock x:Name="TxtPortSdk" Text="本机 SDK" Foreground="#E8EAED" FontSize="13"/>
+                        <TextBlock Text="37812" Foreground="#6B7280" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                      </DockPanel>
+                      <TextBox x:Name="TxtSdkPort"/>
+                    </StackPanel>
+                    <StackPanel Margin="10,0,0,0">
+                      <DockPanel Margin="0,0,0,8">
+                        <TextBlock x:Name="TxtPortGameUdp" Text="游戏 UDP" Foreground="#E8EAED" FontSize="13"/>
+                        <TextBlock Text="37813" Foreground="#6B7280" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                      </DockPanel>
+                      <TextBox x:Name="TxtGameUdpPort"/>
+                    </StackPanel>
+                  </UniformGrid>
+                </StackPanel>
+              </Border>
+            </Grid>
+          </DockPanel>
+        </Grid>
+      </Grid>
+    </ScrollViewer>
+  </Grid>
+</Window>

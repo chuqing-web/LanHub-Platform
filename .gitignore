@@ -1,0 +1,17 @@
+## Build
+bin/
+obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+
+## IDE
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Misc
+.DS_Store
+*.log
