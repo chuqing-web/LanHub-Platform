@@ -1,10 +1,10 @@
 # LanHub
 
+**English** | [中文](README.zh-CN.md)
+
 **Build your own LAN multiplayer games from your ideas.**
 
 LanHub is a same-Wi‑Fi party platform plus **LanHub.Sdk**: you invent the game, integrate the SDK, and friends on the local network join through rooms you host. Only games that use the SDK can multiplayer through the platform — the launcher handles rooms, discovery, room codes, and process launch; in-game networking always goes through the SDK.
-
-[中文说明](README.zh-CN.md)
 
 ![LanHub lobby](picture/Lanhub%20Homepage.png)
 
@@ -26,7 +26,24 @@ LanHub is a same-Wi‑Fi party platform plus **LanHub.Sdk**: you invent the game
 
 ---
 
-## Open the solution
+## Download & try
+
+Prebuilt Windows binaries are on **[GitHub Releases](https://github.com/chuqing-web/LanHub-Platform/releases/latest)** (v1.0.0).
+
+| Asset | What you get | GameId |
+|-------|--------------|--------|
+| [LanHub.zip](https://github.com/chuqing-web/LanHub-Platform/releases/download/v1.0.0/LanHub.zip) | Launcher | — |
+| [Lanchat.zip](https://github.com/chuqing-web/LanHub-Platform/releases/download/v1.0.0/Lanchat.zip) | Sample LAN chat | `lan-chat` |
+| [ArenaDuel.zip](https://github.com/chuqing-web/LanHub-Platform/releases/download/v1.0.0/ArenaDuel.zip) | Sample 1v1 duel | `arena-duel` |
+
+1. Extract `LanHub.zip` and run `LanHub.exe` (Windows 10/11 x64).
+2. Extract the sample zips; in **Library → Add**, register each `.exe` with the GameId above (same ID on every PC).
+3. Host creates a room; guests join with the 6-digit code.
+4. Both open the **same GameId** from the library — do not double-click the exe in Explorer.
+
+---
+
+## Build from source
 
 Use **Visual Studio 2022** and open `LanHub.sln` (.NET 8).
 
@@ -60,7 +77,7 @@ Default ports: discovery UDP `37810`, room TCP `37811`, local SDK `37812`, game 
 
 ## Sample apps (`game/`)
 
-These are **test / reference programs**, not the product itself. Use them to verify the platform end-to-end and as templates when wiring your own game.
+These are **test / reference programs**, not the product itself. Use them to verify the platform end-to-end and as templates when wiring your own game. Prebuilt packages are in [Releases](https://github.com/chuqing-web/LanHub-Platform/releases/latest); source lives under `game/`.
 
 ### LanChat (`game/LanChat`)
 

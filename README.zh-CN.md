@@ -1,10 +1,10 @@
 # LanHub
 
+[English](README.md) | **中文**
+
 **用自己的想法，做属于自己的局域网联机游戏。**
 
 LanHub 是同一 Wi‑Fi 下的局域网派对平台 + **LanHub.Sdk**：你构思玩法并接入 SDK，同网好友通过主机开房即可联机。**只有接入 SDK 的游戏才能通过平台互联**；客户端负责开房、发现、校验房间号、拉起进程，游戏内联机一律走 SDK。
-
-[English README](README.md)（默认展示）
 
 ![LanHub 大厅](picture/Lanhub%20Homepage.png)
 
@@ -26,7 +26,24 @@ LanHub 是同一 Wi‑Fi 下的局域网派对平台 + **LanHub.Sdk**：你构�
 
 ---
 
-## 打开工程
+## 下载体验
+
+预编译 Windows 包已发布在 **[GitHub Releases](https://github.com/chuqing-web/LanHub-Platform/releases/latest)**（v1.0.0）。
+
+| 资源 | 内容 | GameId |
+|------|------|--------|
+| [LanHub.zip](https://github.com/chuqing-web/LanHub-Platform/releases/download/v1.0.0/LanHub.zip) | 启动器 | — |
+| [Lanchat.zip](https://github.com/chuqing-web/LanHub-Platform/releases/download/v1.0.0/Lanchat.zip) | 示例局域网聊天 | `lan-chat` |
+| [ArenaDuel.zip](https://github.com/chuqing-web/LanHub-Platform/releases/download/v1.0.0/ArenaDuel.zip) | 示例 1v1 对战 | `arena-duel` |
+
+1. 解压 `LanHub.zip`，运行 `LanHub.exe`（Windows 10/11 x64）。
+2. 解压示例包；在 **游戏库 → 添加** 中登记各 `.exe`，GameId 填上表（每台电脑必须一致）。
+3. 主机开房，客人用六位房间号加入。
+4. 双方从游戏库打开 **同一 GameId** — 不要在资源管理器里直接双击 exe。
+
+---
+
+## 从源码构建
 
 用 **Visual Studio 2022** 打开 `LanHub.sln`（.NET 8）。
 
@@ -60,7 +77,7 @@ dotnet run --project src\LanHub\LanHub.csproj
 
 ## 示例程序（`game/`）
 
-以下为**测试 / 参考程序**，不是平台本体。用于端到端验证联机，也可作为接入模板。
+以下为**测试 / 参考程序**，不是平台本体。用于端到端验证联机，也可作为接入模板。预编译包见 [Releases](https://github.com/chuqing-web/LanHub-Platform/releases/latest)；源码在 `game/`。
 
 ### LanChat（`game/LanChat`）
 
